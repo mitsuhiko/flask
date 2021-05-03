@@ -68,6 +68,8 @@ from .typing import TemplateGlobalCallable
 from .typing import TemplateTestCallable
 from .typing import URLDefaultCallable
 from .typing import URLValuePreprocessorCallable
+from .typing import ViewFuncArgument
+from .views import View
 from .wrappers import Request
 from .wrappers import Response
 
@@ -1033,10 +1035,16 @@ class Flask(Scaffold):
         self,
         rule: str,
         endpoint: t.Optional[str] = None,
-        view_func: t.Optional[t.Callable] = None,
+        view_func: ViewFuncArgument = None,
         provide_automatic_options: t.Optional[bool] = None,
         **options: t.Any,
     ) -> None:
+        """A helper method to register a rule (and optionally a view function)
+        to the application.
+
+        .. versionchanged:: 2.0.0
+            Support to pass a view class as view function.
+        """
         if endpoint is None:
             endpoint = _endpoint_from_view_func(view_func)  # type: ignore
         options["endpoint"] = endpoint
@@ -1078,6 +1086,8 @@ class Flask(Scaffold):
         rule.provide_automatic_options = provide_automatic_options  # type: ignore
 
         self.url_map.add(rule)
+        if isinstance(view_func, type) and issubclass(view_func, View):
+            view_func = view_func.as_view(endpoint)
         if view_func is not None:
             old_func = self.view_functions.get(endpoint)
             if old_func is not None and old_func != view_func:

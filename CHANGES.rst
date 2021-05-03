@@ -83,7 +83,8 @@ Unreleased
 -   ``helpers.total_seconds()`` is deprecated. Use
     ``timedelta.total_seconds()`` instead. :pr:`3962`
 -   Add type hinting. :pr:`3973`.
-
+-   Support using the ``route`` decorator on view classes (i.e.
+    ``View`` and ``MethodView`` subclasses). :issue:`3404`
 
 Version 1.1.2
 -------------

@@ -5,6 +5,7 @@ if t.TYPE_CHECKING:
     from werkzeug.datastructures import Headers  # noqa: F401
     from wsgiref.types import WSGIApplication  # noqa: F401
     from .wrappers import Response  # noqa: F401
+    from .views import View  # noqa: F401
 
 # The possible types that are directly convertible or are a Response object.
 ResponseValue = t.Union[
@@ -44,3 +45,4 @@ TemplateGlobalCallable = t.Callable[[], t.Any]
 TemplateTestCallable = t.Callable[[t.Any], bool]
 URLDefaultCallable = t.Callable[[str, dict], None]
 URLValuePreprocessorCallable = t.Callable[[t.Optional[str], t.Optional[dict]], None]
+ViewFuncArgument = t.Optional[t.Union[t.Callable, t.Type["View"]]]

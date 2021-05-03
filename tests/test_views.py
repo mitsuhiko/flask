@@ -240,3 +240,55 @@ def test_remove_method_from_parent(app, client):
     assert client.get("/").data == b"GET"
     assert client.post("/").status_code == 405
     assert sorted(View.methods) == ["GET"]
+
+
+def test_route_on_view(app):
+    @app.route("/", endpoint="index")
+    class Index(flask.views.View):
+        methods = ["GET", "POST"]
+
+        def dispatch_request(self):
+            return flask.request.method
+
+    common_test(app)
+
+
+def test_route_on_methodview(app):
+    @app.route("/", endpoint="index")
+    class Index(flask.views.MethodView):
+        def get(self):
+            return "GET"
+
+        def post(self):
+            return "POST"
+
+    common_test(app)
+
+
+def test_bp_route_on_view(app):
+    bp = flask.Blueprint("test", __name__)
+
+    @bp.route("/", endpoint="index")
+    class Index(flask.views.View):
+        methods = ["GET", "POST"]
+
+        def dispatch_request(self):
+            return flask.request.method
+
+    app.register_blueprint(bp)
+    common_test(app)
+
+
+def test_bp_route_on_methodview(app):
+    bp = flask.Blueprint("test", __name__)
+
+    @bp.route("/", endpoint="index")
+    class Index(flask.views.MethodView):
+        def get(self):
+            return "GET"
+
+        def post(self):
+            return "POST"
+
+    app.register_blueprint(bp)
+    common_test(app)

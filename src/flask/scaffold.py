@@ -405,9 +405,9 @@ class Scaffold:
         return self._method_route("PATCH", rule, options)
 
     def route(self, rule: str, **options: t.Any) -> t.Callable:
-        """Decorate a view function to register it with the given URL
-        rule and options. Calls :meth:`add_url_rule`, which has more
-        details about the implementation.
+        """Decorate a view function or view class to register it with
+        the given URL rule and options. Calls :meth:`add_url_rule`, which
+        has more details about the implementation.
 
         .. code-block:: python
 
@@ -426,6 +426,9 @@ class Scaffold:
         :param rule: The URL rule string.
         :param options: Extra options passed to the
             :class:`~werkzeug.routing.Rule` object.
+
+        .. versionchanged:: 2.0.0
+            The ``route`` decorator can be used on view classes.
         """
 
         def decorator(f: t.Callable) -> t.Callable:

@@ -15,6 +15,8 @@ from .typing import TemplateGlobalCallable
 from .typing import TemplateTestCallable
 from .typing import URLDefaultCallable
 from .typing import URLValuePreprocessorCallable
+from .typing import ViewFuncArgument
+from .views import View
 
 if t.TYPE_CHECKING:
     from .app import Flask
@@ -78,12 +80,15 @@ class BlueprintSetupState:
         self,
         rule: str,
         endpoint: t.Optional[str] = None,
-        view_func: t.Optional[t.Callable] = None,
+        view_func: ViewFuncArgument = None,
         **options: t.Any,
     ) -> None:
         """A helper method to register a rule (and optionally a view function)
         to the application.  The endpoint is automatically prefixed with the
         blueprint's name.
+
+        .. versionchanged:: 2.0.0
+            Support to pass a view class as view function.
         """
         if self.url_prefix is not None:
             if rule:
@@ -96,6 +101,8 @@ class BlueprintSetupState:
         defaults = self.url_defaults
         if "defaults" in options:
             defaults = dict(defaults, **options.pop("defaults"))
+        if isinstance(view_func, type) and issubclass(view_func, View):
+            view_func = view_func.as_view(endpoint)
         self.app.add_url_rule(
             rule,
             f"{self.name_prefix}{self.blueprint.name}.{endpoint}",

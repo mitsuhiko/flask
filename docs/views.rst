@@ -233,3 +233,56 @@ registration code::
                          methods=['GET', 'PUT', 'DELETE'])
 
     register_api(UserAPI, 'user_api', '/users/', pk='user_id')
+
+
+Use the ``route`` Decorator on View Classes
+-------------------------------------------
+
+For simple use cases, you can use the :func:`~flask.Flask.route` decorator
+as a shortcut of :meth:`~flask.views.View.as_view` class method to register
+a view class::
+
+    from flask.views import View
+
+    @app.route('/users/', endpoint='show_users')
+    class ShowUsers(View):
+
+        def dispatch_request(self):
+            users = User.query.all()
+            return render_template('users.html', objects=users)
+
+Or on a method-based view class::
+
+    from flask.views import MethodView
+
+    @app.route('/users/', endpoint='users')
+    class UserAPI(MethodView):
+
+        def get(self):
+            users = User.query.all()
+            ...
+
+        def post(self):
+            user = User.from_form_data(request.form)
+            ...
+
+You can also pass a view class to :meth:`~flask.Flask.add_url_rule`
+directly::
+
+    from flask.views import MethodView
+
+    class UserAPI(MethodView):
+
+        def get(self):
+            users = User.query.all()
+            ...
+
+        def post(self):
+            user = User.from_form_data(request.form)
+            ...
+
+    app.add_url_rule('/users/', endpoint='users', view_func=UserAPI)
+
+Beware that if the ``endpoint`` argument isn't provided, the class name
+will be used as the endpoint. Also, you can't pass any class arguments in
+this way.
