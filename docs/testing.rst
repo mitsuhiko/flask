@@ -313,7 +313,8 @@ And then to use it::
         return jsonify(username=g.user.username)
 
     with user_set(app, my_user):
-        with app.test_client() as c:
+        with app.app_context():
+            c = app.test_client()
             resp = c.get('/users/me')
             data = json.loads(resp.data)
             assert data['username'] == my_user.username
