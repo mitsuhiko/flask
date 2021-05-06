@@ -70,6 +70,12 @@ to tell your terminal the application to work with by exporting the
          > flask run
           * Running on http://127.0.0.1:5000/
 
+.. admonition:: Application Discovery Behavior
+
+   If the file is named :file:`app.py` or :file:`wsgi.py`, you can
+   run ``flask`` commands without setting the ``FLASK_APP`` environment
+   variable. See :doc:`/cli` for more details.
+
 This launches a very simple builtin server, which is good enough for
 testing but probably not what you want to use in production. For
 deployment options see :doc:`deploying/index`.
