@@ -45,13 +45,13 @@ While ``FLASK_APP`` supports a variety of options for specifying your
 application, most use cases should be simple. Here are the typical values:
 
 (nothing)
-    The file :file:`wsgi.py` is imported, automatically detecting an app
-    (``app``). This provides an easy way to create an app from a factory with
-    extra arguments.
+    The name "app" or "wsgi" is imported (as a ".py" file, or package),
+    automatically detecting an app (``app`` or ``application``) or
+    factory (``create_app`` or ``make_app``).
 
 ``FLASK_APP=hello``
-    The name is imported, automatically detecting an app (``app``) or factory
-    (``create_app``).
+    The given name is imported, automatically detecting an app (``app`` or
+    ``application``) or factory (``create_app`` or ``make_app``).
 
 ----
 
