@@ -1,9 +1,9 @@
 from __future__ import annotations
 
+import collections.abc as cabc
 import typing as t
 
 if t.TYPE_CHECKING:  # pragma: no cover
-    from collections.abc import AsyncIterable
     from _typeshed.wsgi import WSGIApplication  # noqa: F401
     from werkzeug.datastructures import Headers  # noqa: F401
     from werkzeug.sansio.response import Response  # noqa: F401
@@ -18,8 +18,8 @@ ResponseValue = t.Union[
     t.Mapping[str, t.Any],
     t.Iterator[str],
     t.Iterator[bytes],
-    AsyncIterable[str],
-    AsyncIterable[bytes],
+    cabc.AsyncIterable[str],
+    cabc.AsyncIterable[bytes],
 ]
 
 # the possible types for an individual HTTP header
