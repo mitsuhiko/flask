@@ -12,6 +12,7 @@ Version 3.1.1
 Unreleased
 
 -   Fix type hint for `cli_runner.invoke`. :issue:`5645`
+-   Add `AsyncIterable` to `flask.typing.ResponseValue`. :pr:`5659` :issue:`#5322`
 
 
 Version 3.1.0
