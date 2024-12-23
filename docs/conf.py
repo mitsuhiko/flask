@@ -62,6 +62,9 @@ html_logo = "_static/flask-vertical.png"
 html_title = f"Flask Documentation ({version})"
 html_show_sourcelink = False
 
+gettext_uuid = True
+gettext_compact = False
+
 # Local Extensions -----------------------------------------------------
 
 
