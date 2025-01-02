@@ -24,28 +24,18 @@ jobs:
           - {name: Minimum Versions, python: '3.12', tox: py-min}
           - {name: Development Versions, python: '3.9', tox: py-dev}
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
+      - uses: pallets/actions/tox@5c46d4abb052877fa7e84db0ceec21b33673559e
         with:
+          environment: ${{ format('py{0}', matrix.python) }}
           python-version: ${{ matrix.python }}
-          allow-prereleases: true
-          cache: pip
-          cache-dependency-path: requirements*/*.txt
-      - run: pip install tox
-      - run: tox run -e ${{ matrix.tox || format('py{0}', matrix.python) }}
   typing:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
+      - uses: pallets/actions/tox@5c46d4abb052877fa7e84db0ceec21b33673559e
         with:
+          environment: 'typing'
           python-version: '3.x'
-          cache: pip
-          cache-dependency-path: requirements*/*.txt
-      - name: cache mypy
-        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
-        with:
-          path: ./.mypy_cache
-          key: mypy|${{ hashFiles('pyproject.toml') }}
-      - run: pip install tox
-      - run: tox run -e typing
+  workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: pallets/actions/zizmor@5c46d4abb052877fa7e84db0ceec21b33673559e
