@@ -1,6 +1,6 @@
 [project]
 name = "Flask"
-version = "3.1.1.dev"
+version = "3.2.0.dev"
 description = "A simple framework for building complex web applications."
 readme = "README.md"
 license = {file = "LICENSE.txt"}

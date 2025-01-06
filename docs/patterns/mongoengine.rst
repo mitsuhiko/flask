@@ -80,7 +80,7 @@ Queries
 Use the class ``objects`` attribute to make queries. A keyword argument
 looks for an equal value on the field. ::
 
-    bttf = Movies.objects(title="Back To The Future").get_or_404()
+    bttf = Movie.objects(title="Back To The Future").get_or_404()
 
 Query operators may be used by concatenating them with the field name
 using a double-underscore. ``objects``, and queries returned by
