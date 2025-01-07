@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import collections.abc as cabc
 import typing as t
 
 if t.TYPE_CHECKING:  # pragma: no cover
@@ -17,6 +18,8 @@ ResponseValue = t.Union[
     t.Mapping[str, t.Any],
     t.Iterator[str],
     t.Iterator[bytes],
+    cabc.AsyncIterable[str],
+    cabc.AsyncIterable[bytes],
 ]
 
 # the possible types for an individual HTTP header
